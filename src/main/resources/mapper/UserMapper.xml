@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.test.model.User" >
+    <constructor >
+      <idArg column="uid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="upwd" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="uname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="utype" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uid, upwd, uname, utype
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+    <select id="login" resultType="com.test.model.User">
+      select <include refid="Base_Column_List"/>
+        from t_user where uname=#{uname}
+    </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_user
+    where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.test.model.User" >
+    insert into t_user (uid, upwd, uname, 
+      utype)
+    values (#{uid,jdbcType=INTEGER}, #{upwd,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, 
+      #{utype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.test.model.User" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="upwd != null" >
+        upwd,
+      </if>
+      <if test="uname != null" >
+        uname,
+      </if>
+      <if test="utype != null" >
+        utype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="upwd != null" >
+        #{upwd,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="utype != null" >
+        #{utype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="register" parameterType="com.test.model.User">
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="upwd != null" >
+        upwd,
+      </if>
+      <if test="uname != null" >
+        uname,
+      </if>
+      <if test="utype != null" >
+        utype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="upwd != null" >
+        #{upwd,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="utype != null" >
+        #{utype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test.model.User" >
+    update t_user
+    <set >
+      <if test="upwd != null" >
+        upwd = #{upwd,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null" >
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="utype != null" >
+        utype = #{utype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test.model.User" >
+    update t_user
+    set upwd = #{upwd,jdbcType=VARCHAR},
+      uname = #{uname,jdbcType=VARCHAR},
+      utype = #{utype,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+</mapper>
